@@ -4,6 +4,7 @@ import { CartComponent } from './carts/components/cart/cart.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/components/login/login.component';
 import { RegisterComponent } from './auth/components/register/register.component';
+import { ProductDetailComponent } from './products/components/product-detail/product-detail.component';
 
 export const routes: Routes = [
     {
@@ -13,6 +14,10 @@ export const routes: Routes = [
     {
         path: 'cart',
         component: CartComponent
+    },
+    {
+        path: 'productDetails/:id',
+        component: ProductDetailComponent
     },
     {
         path:'', redirectTo: 'products', pathMatch: 'full'
