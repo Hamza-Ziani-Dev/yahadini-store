@@ -9,5 +9,15 @@ export class ProductsService {
 
 
   getAllProducts(){
-    return this.HttpClient.get('https://fakestoreapi.com/products');}
+    return this.HttpClient.get('https://fakestoreapi.com/products');
+  }
+
+  getAllCategories(){
+    return this.HttpClient.get('https://fakestoreapi.com/products/categories');
+  }
+
+
+  getCategoriesByName(keysName : string){
+    return this.HttpClient.get('https://fakestoreapi.com/products/category/'+keysName);
+  }
 }
