@@ -15,8 +15,12 @@ export class ProductsService {
   getAllCategories(){
     return this.HttpClient.get('https://fakestoreapi.com/products/categories');
   }
+// Filter Categories Use Item:
+  filterByCategoryUseItem(category: string): void {
+    this.getCategoriesByName(category);
+  }
 
-
+  
   getCategoriesByName(keysName : string){
     return this.HttpClient.get('https://fakestoreapi.com/products/category/'+keysName);
   }

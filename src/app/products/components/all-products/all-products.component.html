@@ -1,56 +1,86 @@
 <div class="card-top container">
-    <div class="container d-flex justify-content-between">
-        <div class="item" >
-            <a>
-                <img src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100" alt="">
-                <h6>All products</h6>
-            </a>
-        </div>
-        <div class="item">
-            <a >
-                <img src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100" alt="">
-                <h6>Electronics</h6>
-            </a>
-        </div>
-        <div class="item">
-            <a >
-                <img src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" alt="">
-                <h6>Fashion</h6>
-            </a>
-        </div>
-        <div class="item">
-            <a >
-                <img style="width: 62px; margin-top: 5px;" src="https://rukminim1.flixcart.com/image/580/696/kkh6zrk0/jewellery-set/o/w/z/gt-ns-862-matushri-art-original-imafzt9teacakjyn.jpeg?q=50" alt="">
-                <h6>Jewllery</h6>
-            </a>
-        </div>
-        <div class="col-md-3 mt-2">
-            <label for="select" class="form-label">Categories:</label>
-            <select class="form-control" (change)="FilterCategories($event)">
-                <option value="All" selected>All</option>
-                @for (categorie of categories; track $index) {
-                    <option value="{{categorie}}">{{categorie}}</option>
-                }
-            </select>
-        </div>
+  <div class="container d-flex justify-content-between">
+    <div class="item" (click)="filterByCategoryUseItem('all')">
+      <a>
+        <img
+          src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
+          alt=""
+        />
+        <h6>All products</h6>
+      </a>
     </div>
+    <div class="item" (click)="filterByCategoryUseItem('electronics')">
+      <a>
+        <img
+          src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100"
+          alt=""
+        />
+        <h6>Electronics</h6>
+      </a>
+    </div>
+    <div class="item" (click)="filterByCategoryUseItem('men\'s clothing')">
+      <a>
+        <img
+          src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100"
+          alt=""
+        />
+        <h6>men's clothing</h6>
+      </a>
+    </div>
+
+    <div class="item" (click)="filterByCategoryUseItem('jewelery')">
+      <a>
+        <img
+          style="width: 62px; margin-top: 5px"
+          src="https://rukminim1.flixcart.com/image/580/696/kkh6zrk0/jewellery-set/o/w/z/gt-ns-862-matushri-art-original-imafzt9teacakjyn.jpeg?q=50"
+          alt=""
+        />
+        <h6>Jewellery</h6>
+      </a>
+    </div>
+    <div class="col-md-3 mt-2">
+      <label for="select" class="form-label">Categories:</label>
+      <select class="form-control" (change)="FilterCategoriesUseSelect($event)">
+        <option value="All" selected>All</option>
+        @for (categorie of categories; track $index) {
+        <option value="{{ categorie }}">{{ categorie }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
 </div>
 
 <div class="container-fluid">
-    <div class="row mx-auto justify-content-between">
-        <ng-container >
-            @for (product of products; track $index) {
-                <div class="card col-md-3">
-                    <img src="{{product.image}}" alt="{{product.image}}">
-                    <h2 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{product.title }}</h2>
-                    <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{product.description}}</p>
-                    <p><strong>Price:</strong> ${{product.price}}</p>
-                    <button class="btn btn-primary" >Add to cart</button>
-                </div>
-            }
-           
-        </ng-container>
-      
-
-    </div>
+  <div class="row mx-auto justify-content-between">
+    <ng-container>
+      @for (product of products; track $index) {
+      <div class="card col-md-3">
+        <img src="{{ product.image }}" alt="{{ product.image }}" />
+        <h2
+          style="
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100ch;
+          "
+        >
+          {{ product.title }}
+        </h2>
+        <p
+          style="
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100ch;
+          "
+        >
+          {{ product.description }}
+        </p>
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <button class="btn btn-primary">Add to cart</button>
+      </div>
+      }
+    </ng-container>
+  </div>
 </div>
