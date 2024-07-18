@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { ProductsModule } from '../../products.module';
 import { ProductsService } from '../../services/products.service';
 import { MaterialModule } from '../../../material/material.module';
+import { SharedModule } from '../../../shared/shared/shared.module';
+import { SpinnerComponent } from '../../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-all-products',
   standalone: true,
-  imports: [ProductsModule, MaterialModule],
+  imports: [ProductsModule, MaterialModule,SpinnerComponent],
   templateUrl: './all-products.component.html',
   styleUrl: './all-products.component.css',
 })
@@ -14,6 +16,8 @@ export class AllProductsComponent {
   selected = 'option2';
   products: any[] = [];
   categories: any[] = [];
+
+  isLoading : boolean = false;
 
   constructor(private productsService: ProductsService) {}
 
@@ -25,17 +29,26 @@ export class AllProductsComponent {
 
   // get All Products
   getAllProducts() {
+    this.isLoading = true;
     this.productsService.getAllProducts().subscribe((res: any) => {
       this.products = res;
-      // console.log(this.products);
+      this.isLoading = false;
+    }, (err)=>{
+      console.log(err);
     });
+    this.isLoading = false;
   }
 
   // get All Categories
   getAllCategories() {
+    this.isLoading = true;
     this.productsService.getAllCategories().subscribe((res: any) => {
       this.categories = res;
+      this.isLoading = false;
+    }, (err)=>{
+      console.log(err);
     });
+    this.isLoading = false;
   }
 
   // Filter Categories Use Select
@@ -50,14 +63,19 @@ export class AllProductsComponent {
 
   // Filter Categories Use Select:
   getCategoriesByName(keysName: string) {
+    this.isLoading = true;
     this.productsService.getCategoriesByName(keysName).subscribe((res: any) => {
       this.products = res;
-      console.log(this.products);
+      this.isLoading = false;
+    }, (err)=>{
+      console.log(err);
     });
+    this.isLoading = false;
   }
 
   // Filter Categories Use Item:
-  filterByCategoryUseItem(category: string): void {
+  filterByCategoryUseItem(category: string): void { 
+   
     if (category === 'all') {
       this.getAllProducts();
     } else {
@@ -66,9 +84,13 @@ export class AllProductsComponent {
   }
 
   getCategoriesByNameUseItem(keysName: string): void {
+    this.isLoading = true;
     this.productsService.getCategoriesByName(keysName).subscribe((res: any) => {
       this.products = res;
-      console.log(this.products);
+      this.isLoading = false;
+    }, (err)=>{
+      console.log(err);
     });
+    this.isLoading = false;
   }
 }
