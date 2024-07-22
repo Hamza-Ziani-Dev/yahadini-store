@@ -1,57 +1,72 @@
-import { Component } from '@angular/core';
-import { ProductsModule } from '../../products.module';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
+import { ProductsModule } from '../../products.module';
 import { MaterialModule } from '../../../material/material.module';
-import { SharedModule } from '../../../shared/shared/shared.module';
 import { SpinnerComponent } from '../../../components/spinner/spinner.component';
+import { NgFor, NgIf } from '@angular/common';
+import { SharedModule } from '../../../shared/shared/shared.module';
+import { ProductComponent } from "../product/product.component";
 
 @Component({
   selector: 'app-all-products',
   standalone: true,
-  imports: [ProductsModule, MaterialModule,SpinnerComponent],
+  imports: [ProductsModule, MaterialModule, SpinnerComponent, NgFor, NgIf, SharedModule, ProductComponent],
   templateUrl: './all-products.component.html',
-  styleUrl: './all-products.component.css',
+  styleUrls: ['./all-products.component.css'],
 })
-export class AllProductsComponent {
-  selected = 'option2';
+export class AllProductsComponent implements OnInit {
   products: any[] = [];
   categories: any[] = [];
-
-  isLoading : boolean = false;
+  amount: number = 1;
+  productsInCart: any[] = [];
+  isLoading: boolean = false;
+  addButton: boolean = false;
 
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
     this.getAllProducts();
     this.getAllCategories();
-    // this.getCategoriesByNameUseItem('all');
   }
 
-  // get All Products
+  one() {
+    console.log('One clicked');
+    alert('One');
+  }
+
+  two() {
+    console.log('Two clicked');
+    alert('Two');
+  }
+
   getAllProducts() {
     this.isLoading = true;
-    this.productsService.getAllProducts().subscribe((res: any) => {
-      this.products = res;
-      this.isLoading = false;
-    }, (err)=>{
-      console.log(err);
-    });
-    this.isLoading = false;
+    this.productsService.getAllProducts().subscribe(
+      (res: any) => {
+        this.products = res;
+        this.isLoading = false;
+      },
+      (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    );
   }
 
-  // get All Categories
   getAllCategories() {
     this.isLoading = true;
-    this.productsService.getAllCategories().subscribe((res: any) => {
-      this.categories = res;
-      this.isLoading = false;
-    }, (err)=>{
-      console.log(err);
-    });
-    this.isLoading = false;
+    this.productsService.getAllCategories().subscribe(
+      (res: any) => {
+        this.categories = res;
+        this.isLoading = false;
+      },
+      (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    );
   }
 
-  // Filter Categories Use Select
   FilterCategoriesUseSelect(event: any) {
     const filterValue = event.target.value;
     if (filterValue === 'All') {
@@ -61,21 +76,21 @@ export class AllProductsComponent {
     }
   }
 
-  // Filter Categories Use Select:
   getCategoriesByName(keysName: string) {
     this.isLoading = true;
-    this.productsService.getCategoriesByName(keysName).subscribe((res: any) => {
-      this.products = res;
-      this.isLoading = false;
-    }, (err)=>{
-      console.log(err);
-    });
-    this.isLoading = false;
+    this.productsService.getCategoriesByName(keysName).subscribe(
+      (res: any) => {
+        this.products = res;
+        this.isLoading = false;
+      },
+      (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    );
   }
 
-  // Filter Categories Use Item:
-  filterByCategoryUseItem(category: string): void { 
-   
+  filterByCategoryUseItem(category: string): void {
     if (category === 'all') {
       this.getAllProducts();
     } else {
@@ -85,12 +100,43 @@ export class AllProductsComponent {
 
   getCategoriesByNameUseItem(keysName: string): void {
     this.isLoading = true;
-    this.productsService.getCategoriesByName(keysName).subscribe((res: any) => {
-      this.products = res;
-      this.isLoading = false;
-    }, (err)=>{
-      console.log(err);
-    });
-    this.isLoading = false;
+    this.productsService.getCategoriesByName(keysName).subscribe(
+      (res: any) => {
+        this.products = res;
+        this.isLoading = false;
+      },
+      (err) => {
+        console.log(err);
+        this.isLoading = false;
+      }
+    );
   }
+
+  showAddToCart(product: any) {
+    this.addButton = true;
+  }
+
+  addToCart(event: any) {
+    if ('cart' in localStorage) {
+      this.productsInCart = JSON.parse(localStorage.getItem('cart')!);
+      this.productsInCart.push(event);
+      localStorage.setItem('cart', JSON.stringify(this.productsInCart));
+
+      const existingProduct = this.productsInCart.find((item) => item.item.id == event.item.id);
+      if (existingProduct) {
+        alert('Product already in cart');
+      } else {
+        this.productsInCart.push(event);
+        localStorage.setItem('cart', JSON.stringify(this.productsInCart));
+      }
+    } else {
+      this.productsInCart.push({ ...event });
+      localStorage.setItem('cart', JSON.stringify(this.productsInCart));
+    }
+    // this.addButton = false;
+    // this.amount = 1;
+  }
+
+ 
+ 
 }

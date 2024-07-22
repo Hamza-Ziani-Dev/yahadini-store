@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 // import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -10,12 +12,16 @@ import { SpinnerComponent } from '../../components/spinner/spinner.component';
   declarations: [],
   imports: [
     CommonModule,
-    SpinnerComponent
+    SpinnerComponent,
+    FormsModule,
+    RouterLink
     
   ],
   exports: [
     CommonModule,
-    SpinnerComponent
+    SpinnerComponent,
+    FormsModule,
+    RouterLink
     
   ]
 })
