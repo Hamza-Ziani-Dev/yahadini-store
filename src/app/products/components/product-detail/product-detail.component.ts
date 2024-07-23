@@ -1,12 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProductsService } from '../../services/products.service';
+import { SharedModule } from '../../../shared/shared/shared.module';
+import { SpinnerComponent } from '../../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [],
+  imports: [SharedModule, SpinnerComponent],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css'
+  styleUrl: './product-detail.component.css',
 })
 export class ProductDetailComponent {
+  id!: number;
+  data : any = {};
 
+  isLoading : boolean = false;
+
+  constructor(
+    private activitedRoute: ActivatedRoute,
+    private productsService: ProductsService
+  ) {
+    this.id = this.activitedRoute.snapshot.params['id'];
+  }
+
+ngOnInit(): void {
+this.getProductById();
+  
+}
+
+  getProductById() {
+    this.isLoading = true;
+    return this.productsService.getProductById(this.id).subscribe((res) => {
+        this.data = res;
+        this.isLoading = false;
+      },
+      (err) => {
+        console.log(err);
+        this.isLoading = false;
+      });
+  }
 }

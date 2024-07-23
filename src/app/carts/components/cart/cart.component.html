@@ -1,11 +1,10 @@
 <ng-container >
-    <div class="container">
+    <div class="container mt-5 text-center">
         <div class="card-table">
             <div class="cart-product">
                 <table class="table table-responsive">
                     <thead>
                         <tr>
-                            <th>Sr.No</th>
                             <th>Product Name</th>
                             <th>Product Image</th>
                             <th>Description</th>
@@ -16,34 +15,43 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr >
-                            <td>2</td>
-                            <td>Title</td>
-                            <td><img style="width: 120px;" src="" alt=""></td>
-                            <td style="width: 25%;">description</td>
-                            <th style="width: 12%;">54</th>
-                            <td style="width: 12%;">4</td>
-                            <td style="width: 12%;">7880</td>
+                        <tr *ngFor="let item of productsInCart; let index = index">
+                            <td>{{item.item.title}}</td>
+                            <td><img style="width: 120px;" src="{{item.item.image}}" alt=""></td>
+                            <td style="width: 25%;">{{item.item.description}}</td>
+                            <td style="width: 12%;">{{item.item.price}}$</td>
+                            <td style="width: 12%;">
+                                <div class="quantity d-flex">
+                                    <button class="btn btn-dark" (click)="decreaseQuantity(index)">-</button>
+                                    <input type="number" class="form-control" (change)="detectChange()" [(ngModel)]="item.quantity">
+                                    <button class="btn btn-dark" (click)="increaseQuantity(index)">+</button>
+                                </div>
+                            </td>
+                            <td style="width: 12%;">{{item.item.price * item.quantity}}$</td>
                             <td>
-                                <button  class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                <button  class="btn btn-danger">
+                                    <i class="fas fa-trash-alt" (click)="removeItem(index)"> Delete</i></button>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4"></td>
-                            <td><button  class="btn btn-danger">Empty Cart</button></td>
+                            <td colspan="3"></td>
+                            <td><button  class="btn btn-danger" (click)="clearCart()">Empty Cart</button></td>
                             <td><button routerLink="/products" class="btn btn-primary">Shop More</button></td>
-                            <td><button class="btn btn-success">Checkout</button></td>
-                            <td><strong>Grand Total : $8890</strong></td>
+                            <td><button class="btn btn-success" (click)="addCart()">Checkout</button></td>
+                            <td><strong>Grand Total : {{total}}$</strong></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="mssg mt-5" *ngIf="success">
+            <p class="text-center text-success">Well Done your order has been placed</p>
+        </div>
     </div>
 </ng-container>
 
 
-<ng-container>
+<!-- <ng-container>
     <div class="container">
         <div class="card">
             <h5 class="card-title">My Cart</h5>
@@ -55,4 +63,4 @@
             <button routerLink="/products" class="btn btn-primary">Shop Now</button>
         </div>
     </div>
-</ng-container>
+</ng-container> -->

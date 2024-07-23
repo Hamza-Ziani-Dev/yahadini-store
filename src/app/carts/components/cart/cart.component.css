@@ -46,3 +46,14 @@ h6 {
     padding: 12px 72px;
     border-radius: 3px !important;
 }
+
+.mssg{
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: aquamarine;
+    border-radius: 10px;
+    padding: 30px;
+    border-radius: 20px;
+}

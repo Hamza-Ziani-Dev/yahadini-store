@@ -24,4 +24,10 @@ export class ProductsService {
   getCategoriesByName(keysName : string){
     return this.HttpClient.get('https://fakestoreapi.com/products/category/'+keysName);
   }
+
+
+  
+  getProductById(id:any){
+    return this.HttpClient.get('https://fakestoreapi.com/products/'+id);
+  }
 }
