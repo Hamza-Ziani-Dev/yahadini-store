@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SharedModule } from '../../../shared/shared/shared.module';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product',
@@ -11,21 +12,19 @@ import { SharedModule } from '../../../shared/shared/shared.module';
 export class ProductComponent {
 
 // Parent To Child
-  @Input() data: any= {}
+  @Input() data!: Product;
 
   // Child To Parent
   @Output() item = new EventEmitter<any>(); 
-  
   showButton = false
-
   amount :number =  0;
 
   constructor(){}
 
-
-  OnInit(){
-
-  }
+ ngOnInit(): void {
+  
+ }
+  
 
   addProduct(){
     this.item.emit({item: this.data, quantity: this.amount})

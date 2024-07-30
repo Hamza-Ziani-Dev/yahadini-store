@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { SharedModule } from '../../../shared/shared/shared.module';
 import { SpinnerComponent } from '../../../components/spinner/spinner.component';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-detail',

@@ -3,20 +3,21 @@ import { ProductsService } from '../../services/products.service';
 import { ProductsModule } from '../../products.module';
 import { MaterialModule } from '../../../material/material.module';
 import { SpinnerComponent } from '../../../components/spinner/spinner.component';
-import { NgFor, NgIf } from '@angular/common';
+
 import { SharedModule } from '../../../shared/shared/shared.module';
 import { ProductComponent } from "../product/product.component";
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-all-products',
   standalone: true,
-  imports: [ProductsModule, MaterialModule, SpinnerComponent, NgFor, NgIf, SharedModule, ProductComponent],
+  imports: [ProductsModule, MaterialModule, SpinnerComponent, SharedModule, ProductComponent],
   templateUrl: './all-products.component.html',
   styleUrls: ['./all-products.component.css'],
 })
 export class AllProductsComponent implements OnInit {
-  products: any[] = [];
-  categories: any[] = [];
+  products: Product[] = [];
+  categories: string[] = [];
   amount: number = 1;
   productsInCart: any[] = [];
   isLoading: boolean = false;
